@@ -1,0 +1,22 @@
+services:
+  ingesta-mongo:
+    build: ./mongodb
+    env_file:
+      - ./.env
+    volumes:
+      - /home/ubuntu/.aws/credentials:/root/.aws/credentials
+
+
+  ingesta-mysql:
+    build: ./mysql
+    env_file:
+      - ./.env
+    volumes:
+      - /home/ubuntu/.aws/credentials:/root/.aws/credentials
+
+  ingesta-postgresql:
+    build: ./postgresql
+    env_file:
+      - ./.env
+    volumes:
+      - /home/ubuntu/.aws/credentials:/root/.aws/credentials
