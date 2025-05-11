@@ -38,7 +38,7 @@ try:
             df = pd.read_sql(f"SELECT * FROM {table}", con=conn)
 
             # Guardar como CSV
-            file_name = f"{table}_dump.csv"
+            file_name = f"{table}.csv"
             df.to_csv(file_name, index=False)
 
             # Subir a S3
