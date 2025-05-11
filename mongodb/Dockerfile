@@ -1,19 +1,20 @@
 FROM python:3.9-slim
 
-# Crear directorio de trabajo
+# Establecer directorio de trabajo
 WORKDIR /ingesta
 
-# Instalar dependencias necesarias
+# Instalar dependencias necesarias en un solo paso
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
-    && python -m pip install --no-cache-dir --upgrade pip \
-    && python -m pip install --no-cache-dir boto3 pymongo python-dotenv \
-    && apt-get remove -y gcc \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*  # Limpiar la cache de apt para reducir el tamaño de la imagen
 
-# Copiar archivos al contenedor
+# Instalar las dependencias de Python
+RUN pip install --no-cache-dir --upgrade pip boto3 psycopg2-binary pandas python-dotenv
+
+# Copiar los archivos de la aplicación (si es necesario)
 COPY . .
 
-# Comando por defecto
-CMD ["python", "mongo.py"]
+# Establecer el comando predeterminado para ejecutar tu aplicación (si es necesario)
+CMD ["python", "app.py"]
+
