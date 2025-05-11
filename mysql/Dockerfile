@@ -1,23 +1,19 @@
-# Imagen base minimalista de Python
+# Imagen base ligera con Python 3.9
 FROM python:3.9-slim
 
-# Establecer el directorio de trabajo dentro del contenedor
-WORKDIR /ingesta
+# Establecer directorio de trabajo
+WORKDIR /app
 
-# Instalar dependencias del sistema necesarias y luego limpiar
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
-    python3-dev \
-    curl \
-    && pip install --upgrade pip \
-    && pip install --no-cache-dir boto3 mysql-connector-python pandas python-dotenv \
-    && apt-get purge -y --auto-remove gcc python3-dev \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Instalar dependencias del sistema necesarias para mysql-connector y pandas
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc libmariadb-dev && \
+    pip install --no-cache-dir mysql-connector-python pandas boto3 python-dotenv && \
+    apt-get purge -y gcc && \
+    apt-get autoremove -y
 
-# Copiar los archivos del proyecto al contenedor
+# Copiar los archivos del proyecto
 COPY . .
 
-# Ejecutar el script principal
-CMD ["python3", "myseq.py"]
+# Comando por defecto al iniciar el contenedor
+CMD ["python3", "mysql.py"]
 
