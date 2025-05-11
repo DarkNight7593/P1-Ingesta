@@ -6,7 +6,6 @@ services:
     volumes:
       - /home/ubuntu/.aws/credentials:/root/.aws/credentials
 
-
   ingesta-mysql:
     build: ./mysql
     env_file:
