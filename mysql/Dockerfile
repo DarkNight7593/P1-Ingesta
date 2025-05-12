@@ -13,4 +13,4 @@ RUN apt-get update && \
 COPY . .
 
 # Comando por defecto al iniciar el contenedor
-CMD ["python3", "mysql.py"]
+CMD ["python3", "myseq.py"]
